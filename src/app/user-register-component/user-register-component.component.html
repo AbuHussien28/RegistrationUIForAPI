@@ -1,0 +1,70 @@
+<!-- user-register-component.component.html -->
+<div class="registrations-container">
+  <div class="registrations-header">
+    <h1 class="registrations-title">
+      <i class="bi bi-ticket-perforated"></i> My Event Registrations
+    </h1>
+    <p class="registrations-subtitle">View all events you've registered for</p>
+  </div>
+
+  <div class="registrations-content">
+    <!-- Loading State -->
+    <div *ngIf="registrations === undefined" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading your registrations...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="registrations && registrations.length === 0" class="empty-state">
+      <i class="bi bi-calendar-x"></i>
+      <h3>No Registrations Yet</h3>
+      <p>You haven't registered for any events yet.</p>
+      <button class="btn-primary" (click)="returnToHome()">
+        Browse Events
+      </button>
+    </div>
+
+    <!-- Registrations Table -->
+    <div *ngIf="registrations && registrations.length > 0" class="registrations-table-container">
+      <div class="table-responsive">
+        <table class="registrations-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Event</th>
+              <th>Registration Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reg of registrations; let i = index">
+              <td class="serial-number">{{ i + 1 }}</td>
+              <td class="event-info">
+                <div class="event-name">{{ reg.eventName }}</div>
+                <div class="user-info">Registered as: {{ reg.userName }}</div>
+              </td>
+              <td class="registration-date">
+                {{ reg.registrationDate | date:'mediumDate' }}
+                <div class="time">{{ reg.registrationDate | date:'shortTime' }}</div>
+              </td>
+              <td class="actions">
+                <button class="btn-view" (click)="viewEvent(reg.eventId)">
+                  <i class="bi bi-eye"></i> View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <p class="total-registrations">
+          Showing {{ registrations.length }} registration{{ registrations.length !== 1 ? 's' : '' }}
+        </p>
+        <button class="btn-primary" (click)="returnToHome()">
+          <i class="bi bi-house"></i> Return to Home
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

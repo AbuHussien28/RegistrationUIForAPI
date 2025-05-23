@@ -1,0 +1,44 @@
+/* sign-up.component.css */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: #333;
+  font-weight: 600;
+}
+
+.form-control, .form-select {
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.invalid-feedback {
+  font-size: 0.85rem;
+  color: #dc3545;
+}
+
+.alert {
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}

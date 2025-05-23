@@ -1,0 +1,40 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Deleted Events</h2>
+    <button class="btn btn-secondary" (click)="goBackToMyEvents()">
+      <i class="bi bi-arrow-left me-2"></i>Back to My Events
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div class="row g-4" *ngIf="!isLoading && deletedEvents.length > 0">
+    <div class="col-md-6 col-lg-4" *ngFor="let event of deletedEvents">
+      <div class="card h-100 shadow-sm">
+        <div class="card-header bg-danger text-white">
+          <h5 class="card-title mb-0">{{ event.title }}</h5>
+        </div>
+        <div class="card-body">
+          <p><strong>Location:</strong> {{ event.location }}</p>
+          <p><strong>Date:</strong> {{ event.startDate | date:'medium' }}</p>
+          <p><strong>Organizer:</strong> {{ event.organizerName }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end gap-2">
+          <button class="btn btn-sm btn-success" (click)="restoreEvent(event.eventId)">
+            <i class="bi bi-arrow-clockwise me-1"></i>Restore
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && deletedEvents.length === 0" class="alert alert-info text-center">
+    No deleted events found.
+  </div>
+</div>

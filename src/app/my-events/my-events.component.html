@@ -1,0 +1,78 @@
+<!-- my-events.component.html -->
+<div class="container my-5">
+  <!-- Page Header with Create Button -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">My Organized Events</h2>
+  <div class="d-flex gap-2">
+    <a routerLink="/event/deleted" class="btn btn-outline-secondary">
+      <i class="bi bi-archive me-2"></i>Deleted Events
+    </a>
+    <a routerLink="/create-event" class="btn btn-primary">
+      <i class="bi bi-plus-circle me-2"></i>Create New Event
+    </a>
+  </div>
+</div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3">Loading your events...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error!</strong> {{ errorMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && myEvents.length === 0" class="card border-0 shadow-sm">
+    <div class="card-body text-center py-5">
+      <i class="bi bi-calendar-x text-muted" style="font-size: 3rem;"></i>
+      <h4 class="mt-3">No events found</h4>
+      <p class="text-muted">You haven't organized any events yet.</p>
+      <a routerLink="/create-event" class="btn btn-primary mt-2">
+        <i class="bi bi-plus-circle me-2"></i>Create Your First Event
+      </a>
+    </div>
+  </div>
+
+  <!-- Events List -->
+  <div class="row g-4" *ngIf="!isLoading && myEvents.length > 0">
+    <div class="col-md-6 col-lg-4" *ngFor="let event of myEvents">
+      <div class="card h-100 border-0 shadow-sm hover-shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">{{ event.title }}</h5>
+          <span class="badge bg-light text-dark" *ngIf="event.location === 'Online'">Online</span>
+        </div>
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-geo-alt-fill text-muted me-2"></i>
+            <span>{{ event.location }}</span>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-calendar-event text-muted me-2"></i>
+            <span>{{ event.startDate | date:'medium' }}</span>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <i class="bi bi-people-fill text-muted me-2"></i>
+            <span>Organized by: {{ event.organizerName }}</span>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0 d-flex justify-content-between">
+          <a [routerLink]="['/event', event.eventId]" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-eye me-1"></i>View
+          </a>
+          <a [routerLink]="['/event', event.eventId, 'edit']" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-pencil-square me-1"></i>Edit
+          </a>
+          <button (click)="deleteEvent(event.eventId)" class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash me-1"></i>Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
