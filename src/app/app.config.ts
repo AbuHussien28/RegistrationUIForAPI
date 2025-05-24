@@ -9,15 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay()),
-
-      provideHttpClient(), // ✅ استخدم بدون withInterceptors
-
-    // ✅ تسجيل الـ interceptor بالطريقة التقليدية
+      provideHttpClient(), 
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
     },
-        importProvidersFrom(CommonModule, FormsModule), // <== هنا تضيف الموديولات الضرورية
+        importProvidersFrom(CommonModule, FormsModule), 
   ]
 };

@@ -1,1 +1,164 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1 class="dashboard-title">
+      <i class="fas fa-tachometer-alt"></i> Admin Dashboard
+    </h1>
+    <div class="dashboard-actions">
+      <button class="refresh-btn" (click)="refreshData()">
+        <i class="fas fa-sync-alt"></i> Refresh
+      </button>
+    </div>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="card-icon bg-primary">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Total Registrations</h3>
+        <p class="card-value">{{ totalRegistrations | number }}</p>
+        <div class="card-trend positive">
+          <i class="fas fa-arrow-up"></i> 12% from last month
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="card-icon bg-success">
+        <i class="fas fa-calendar-alt"></i>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Total Events</h3>
+        <p class="card-value">{{ totalEvents | number }}</p>
+        <div class="card-trend positive">
+          <i class="fas fa-arrow-up"></i> 5 new events
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="card-icon bg-info">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Total Users</h3>
+        <p class="card-value">{{ totalUsers | number }}</p>
+        <div class="card-trend negative">
+          <i class="fas fa-arrow-down"></i> 2% decrease
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="card-icon bg-warning">
+        <i class="fas fa-user-tie"></i>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Total Organizers</h3>
+        <p class="card-value">{{ totalOrganizers | number }}</p>
+        <div class="card-trend neutral">
+          <i class="fas fa-minus"></i> No change
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-main">
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2><i class="fas fa-trophy"></i> Most Registered Event</h2>
+        <select class="time-filter" [(ngModel)]="timeFilter">
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="year">This Year</option>
+        </select>
+      </div>
+      <div class="section-body">
+        <div *ngIf="mostRegisteredEvent; else noEventData" class="event-details">
+          <div class="event-info">
+            <h3 class="event-name">{{ mostRegisteredEvent.name }}</h3>
+            <div class="event-meta">
+              <span class="event-date">
+                <i class="fas fa-calendar-day"></i> {{ mostRegisteredEvent.startDate | date:'fullDate' }}
+              </span>
+              <span class="event-location">
+                <i class="fas fa-map-marker-alt"></i> {{ mostRegisteredEvent.location }}
+              </span>
+            </div>
+            <div class="event-stats">
+              <div class="stat-item">
+                <span class="stat-label">Registrations</span>
+                <span class="stat-value">{{ mostRegisteredEvent.registrations }}</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Attendance Rate</span>
+                <span class="stat-value">85%</span>
+              </div>
+            </div>
+          </div>
+          <div class="event-chart-container">
+            <canvas #eventChart></canvas>
+          </div>
+        </div>
+        <ng-template #noEventData>
+          <div class="empty-state">
+            <i class="fas fa-calendar-times"></i>
+            <p>No event data available</p>
+            <button class="btn-primary" (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i> Try Again
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Registrations Per Month Section -->
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2><i class="fas fa-chart-line"></i> Registrations Per Month</h2>
+        <div class="view-options">
+          <button class="view-btn active" (click)="changeView('chart')">
+            <i class="fas fa-chart-bar"></i>
+          </button>
+          <button class="view-btn" (click)="changeView('table')">
+            <i class="fas fa-table"></i>
+          </button>
+        </div>
+      </div>
+      <div class="section-body">
+        <div *ngIf="registrationsPerMonth && registrationsPerMonth.length > 0; else noMonthlyData">
+          <div *ngIf="currentView === 'chart'" class="chart-container">
+            <canvas #monthlyChart></canvas>
+          </div>
+          <div *ngIf="currentView === 'table'" class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Registrations</th>
+                  <th>Growth</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of registrationsPerMonth; let i = index">
+                  <td>{{ item.month }}</td>
+                  <td>{{ item.count }}</td>
+                  <td>
+                    <span [class]="getGrowthClass(i)">
+                      <i [class]="getGrowthIcon(i)"></i>
+                      {{ calculateGrowth(i) }}%
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ng-template #noMonthlyData>
+          <div class="empty-state">
+            <i class="fas fa-chart-pie"></i>
+            <p>No registration data available</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

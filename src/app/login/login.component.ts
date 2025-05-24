@@ -41,9 +41,11 @@ export class LoginComponent {
             this.router.navigate(['/my-events']);
            }  else if (role === 'User') {
                  this.router.navigate(['/home']);
-            }else {
-              this.router.navigate(['/dashboard']);
-            }
+            }else if (role === 'Admin') {
+  this.router.navigate(['/dashboard']);
+}else {
+  this.router.navigate(['/access-denied']);
+}
       },
       error: (err) => {
         this.errorMessage = 'Login failed. Please check your credentials and try again.';

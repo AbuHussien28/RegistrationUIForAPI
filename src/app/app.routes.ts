@@ -17,6 +17,12 @@ export const routes: Routes = [
       import('./home/home.component').then((m) => m.HomeComponent),
     canActivate: [authGuard],
   },
+  {
+  path: 'dashboard',
+  loadComponent: () =>
+    import('./dashboard/dashboard.component').then((m) => m.DashboardComponent),
+  canActivate: [authGuard],
+},
  {
   path: 'user-register',
   loadComponent: () => import('./user-register-component/user-register-component.component').then(m => m.UserRegisterComponent),
@@ -61,5 +67,9 @@ export const routes: Routes = [
   loadComponent: () =>
     import('./update-event/update-event.component').then(m => m.EventEditComponent),
   canActivate: [authGuard],
+},{
+  path: 'access-denied',
+  loadComponent: () =>
+    import('./access-denied/access-denied.component').then((m) => m.AccessDeniedComponent),
 }
 ];
