@@ -1,17 +1,20 @@
 <!-- my-events.component.html -->
 <div class="container my-5">
   <!-- Page Header with Create Button -->
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="mb-0">My Organized Events</h2>
-  <div class="d-flex gap-2">
-    <a routerLink="/event/deleted" class="btn btn-outline-secondary">
-      <i class="bi bi-archive me-2"></i>Deleted Events
-    </a>
-    <a routerLink="/create-event" class="btn btn-primary">
-      <i class="bi bi-plus-circle me-2"></i>Create New Event
-    </a>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">My Organized Events</h2>
+    <div class="d-flex align-items-center gap-2">
+      <a routerLink="/event/deleted" class="btn btn-outline-secondary">
+        <i class="bi bi-archive me-2"></i>Deleted Events
+      </a>
+      <a routerLink="/create-event" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-2"></i>Create New Event
+      </a>
+      <div class="ms-2">
+        <app-user-dropdown></app-user-dropdown>
+      </div>
+    </div>
   </div>
-</div>
 
   <!-- Loading State -->
   <div *ngIf="isLoading" class="text-center py-5">

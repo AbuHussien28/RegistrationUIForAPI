@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { UserDropdownComponent } from "../user-dropdown/user-dropdown.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, UserDropdownComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

@@ -1,0 +1,19 @@
+<!-- user-dropdown.component.html -->
+<div class="user-dropdown">
+  <button class="user-btn" (click)="toggleDropdown()">
+    <i class="bi bi-person-circle"></i>
+  </button>
+  
+  <div class="dropdown-menu" [class.show]="isOpen">
+    <a class="dropdown-item" routerLink="/change-username" (click)="closeDropdown.emit()">
+      <i class="bi bi-person"></i> Change Username
+    </a>
+   <a class="dropdown-item" routerLink="/change-password" (click)="closeDropdown.emit()">
+  <i class="bi bi-lock"></i> Change Password
+</a>
+    <div class="dropdown-divider"></div>
+    <button class="dropdown-item" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+  </div>
+</div>

@@ -1,14 +1,14 @@
-// my-events.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { UserDropdownComponent } from "../user-dropdown/user-dropdown.component";
 
 @Component({
   selector: 'app-my-events',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, HttpClientModule, RouterModule,UserDropdownComponent],
   templateUrl: './my-events.component.html',
   styleUrls: ['./my-events.component.css']
 })

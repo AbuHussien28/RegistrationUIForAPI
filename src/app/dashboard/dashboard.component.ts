@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
 import { DashboardService } from '../services/dashboard.service';
 import { forkJoin } from 'rxjs';
+import { UserDropdownComponent } from "../user-dropdown/user-dropdown.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,UserDropdownComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })

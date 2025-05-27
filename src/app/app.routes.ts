@@ -67,9 +67,21 @@ export const routes: Routes = [
   loadComponent: () =>
     import('./update-event/update-event.component').then(m => m.EventEditComponent),
   canActivate: [authGuard],
-},{
+},
+{
+  path: 'change-username',
+  loadComponent: () => import('./change-username/change-username.component').then(m => m.ChangeUsernameComponent),
+  canActivate: [authGuard]
+},
+{
+  path: 'change-password',
+  loadComponent: () => import('./change-password/change-password.component').then(m => m.ChangePasswordComponent),
+  canActivate: [authGuard]
+},
+{
   path: 'access-denied',
   loadComponent: () =>
     import('./access-denied/access-denied.component').then((m) => m.AccessDeniedComponent),
-}
+},
+
 ];
