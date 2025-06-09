@@ -220,8 +220,6 @@
   color: var(--text-secondary);
   font-size: 0.9rem;
 }
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .registrations-container {
     padding: 1.5rem;

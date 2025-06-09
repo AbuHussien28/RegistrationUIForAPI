@@ -1,4 +1,3 @@
-<!-- home.component.html -->
 <div class="app-container">
   <!-- Navigation Bar -->
   <nav class="app-navbar">
@@ -7,6 +6,7 @@
       <span class="logo-text">EventHub</span>
     </div>
 
+    <!-- Desktop Search -->
     <div class="search-container">
       <i class="bi bi-search"></i>
       <input
@@ -17,25 +17,60 @@
         class="search-input"
       />
     </div>
-
     <div class="nav-actions">
       <button class="nav-btn" (click)="goToUserRegistrations()">
         <i class="bi bi-ticket-perforated"></i>
         <span class="btn-text">My Registrations</span>
       </button>
-        <app-user-dropdown></app-user-dropdown>
+      <app-user-dropdown></app-user-dropdown>
     </div>
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+      <i [class]="mobileMenuOpen ? 'bi bi-x' : 'bi bi-list'"></i>
+    </button>
   </nav>
-
-  <!-- Main Content -->
+  <div 
+    class="mobile-menu-overlay" 
+    [class.active]="mobileMenuOpen"
+    (click)="closeMobileMenu()">
+  </div>
+  <div class="mobile-menu" [class.active]="mobileMenuOpen">
+    <div class="mobile-menu-header">
+      <div class="navbar-brand">
+        <i class="bi bi-calendar-event"></i>
+        <span>EventHub</span>
+      </div>
+      <button class="mobile-menu-close" (click)="closeMobileMenu()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+    <div class="mobile-search">
+      <div class="search-container">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          placeholder="Search events..."
+          [(ngModel)]="searchTerm"
+          (input)="filterEvents()"
+          class="search-input"
+        />
+      </div>
+    </div>
+    <div class="mobile-nav-actions">
+      <button class="mobile-nav-btn" (click)="goToUserRegistrations(); closeMobileMenu()">
+        <i class="bi bi-ticket-perforated"></i>
+        <span>My Registrations</span>
+      </button>
+      <button class="mobile-nav-btn" (click)="closeMobileMenu()">
+        <i class="bi bi-person-circle"></i>
+        <span>Profile</span>
+      </button>
+      <button class="mobile-nav-btn logout-mobile" (click)="logout(); closeMobileMenu()">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
   <main class="main-content">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <h1 class="hero-title">Discover Upcoming Events</h1>
-      <p class="hero-subtitle">Find and register for events that interest you</p>
-    </section>
-
-    <!-- Filters Section -->
     <section class="filters-section">
       <div class="date-filters">
         <div class="date-filter">
@@ -54,8 +89,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Events Grid -->
     <section class="events-section">
       <div *ngIf="filteredEvents.length === 0" class="empty-state">
         <i class="bi bi-calendar-x"></i>
@@ -64,7 +97,7 @@
       </div>
 
       <div class="events-grid">
-        <div *ngFor="let event of filteredEvents" class="event-card">
+        <div *ngFor="let event of pagedEvents" class="event-card">
           <div class="card-badge" *ngIf="event.location === 'Online'">Online</div>
           
           <div class="card-header">
@@ -97,10 +130,36 @@
           </div>
 
           <div class="card-footer">
-            <button class="register-btn" (click)="registerToEvent(event.eventId)">
-              <i class="bi bi-ticket-perforated"></i> Register Now
+            <button 
+              class="register-btn" 
+              (click)="registerToEvent(event.eventId)"
+              [disabled]="isPastEvent(event.endDate)"
+              [ngClass]="{'disabled-btn': isPastEvent(event.endDate)}">
+              <i class="bi bi-ticket-perforated"></i> 
+              {{ isPastEvent(event.endDate) ? 'Event Ended' : 'Register Now' }}
             </button>
           </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-controls" *ngIf="totalPages > 1">
+          <button (click)="prevPage()" [disabled]="currentPage === 1">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          
+          <div class="page-numbers">
+            <button 
+              *ngFor="let page of getPageNumbers()" 
+              (click)="goToPage(page)"
+              [class.active]="page === currentPage"
+              [disabled]="page === '...'">
+              {{ page }}
+            </button>
+          </div>
+          
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+            <i class="bi bi-chevron-right"></i>
+          </button>
         </div>
       </div>
     </section>

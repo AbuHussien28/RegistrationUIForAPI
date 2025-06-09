@@ -74,6 +74,9 @@
       </div>
       <div class="section-body">
         <div *ngIf="mostRegisteredEvent; else noEventData" class="event-details">
+          <div class="event-chart-container">
+            <canvas #eventChart></canvas>
+          </div>
           <div class="event-info">
             <h3 class="event-name">{{ mostRegisteredEvent.name }}</h3>
             <div class="event-meta">
@@ -94,9 +97,6 @@
                 <span class="stat-value">85%</span>
               </div>
             </div>
-          </div>
-          <div class="event-chart-container">
-            <canvas #eventChart></canvas>
           </div>
         </div>
         <ng-template #noEventData>

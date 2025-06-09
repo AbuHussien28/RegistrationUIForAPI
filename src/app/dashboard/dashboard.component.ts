@@ -9,7 +9,7 @@ import { UserDropdownComponent } from "../user-dropdown/user-dropdown.component"
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule,UserDropdownComponent],
+  imports: [CommonModule, FormsModule, UserDropdownComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   timeFilter = 'month';
   currentView = 'chart';
   isLoading = false;
+  
   @ViewChild('eventChart') private eventChartRef!: ElementRef;
   @ViewChild('monthlyChart') private monthlyChartRef!: ElementRef;
   private eventChart?: Chart;
@@ -61,7 +62,7 @@ export class DashboardComponent implements OnInit {
         }));
 
         this.isLoading = false;
-              this.cdRef.detectChanges();
+        this.cdRef.detectChanges();
         
         setTimeout(() => {
           this.createCharts();

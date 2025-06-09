@@ -27,34 +27,34 @@
     <!-- Registrations Table -->
     <div *ngIf="registrations && registrations.length > 0" class="registrations-table-container">
       <div class="table-responsive">
-        <table class="registrations-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Event</th>
-              <th>Registration Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let reg of registrations; let i = index">
-              <td class="serial-number">{{ i + 1 }}</td>
-              <td class="event-info">
-                <div class="event-name">{{ reg.eventName }}</div>
-                <div class="user-info">Registered as: {{ reg.userName }}</div>
-              </td>
-              <td class="registration-date">
-                {{ reg.registrationDate | date:'mediumDate' }}
-                <div class="time">{{ reg.registrationDate | date:'shortTime' }}</div>
-              </td>
-              <td class="actions">
-                <button class="btn-view" (click)="viewEvent(reg.eventId)">
-                  <i class="bi bi-eye"></i> View
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+         <table class="registrations-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Event</th>
+        <th>Registration Date</th>
+        <th class="actions-header">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reg of registrations; let i = index">
+        <td class="serial-number">{{ i + 1 }}</td>
+        <td class="event-info">
+          <div class="event-name">{{ reg.eventName }}</div>
+          <div class="user-info">Registered as: {{ reg.userName }}</div>
+        </td>
+        <td class="registration-date">
+          {{ reg.registrationDate | date:'mediumDate' }}
+          <div class="time">{{ reg.registrationDate | date:'shortTime' }}</div>
+        </td>
+        <td class="actions-cell">
+          <button class="btn-view" (click)="viewEvent(reg.eventId)">
+            <i class="bi bi-eye"></i> View
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
       </div>
 
       <div class="table-footer">
